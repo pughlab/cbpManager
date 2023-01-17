@@ -241,6 +241,16 @@ class Jinja2HtmlHandler(logging.handlers.BufferingHandler):
         with open(self.output_filename, 'w') as f:
             f.write(doc)
 
+        # modification to generate the second report
+        # in the used template css parts and scripts were removed
+        template2 = j_env.get_template('cropped_validation_report_template.html.jinja')
+        doc2 = template2.render(
+            study_dir=self.study_dir,
+            record_list=self.buffer,
+            **kwargs)
+        with open(self.output_filename[:-5]+'_cropped'+self.output_filename[-5:], 'w') as f:
+            f.write(doc2)
+
 
 class ErrorFileFormatter(cbioportal_common.ValidationMessageFormatter):
 
